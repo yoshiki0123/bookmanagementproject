@@ -1,0 +1,138 @@
+{% extends 'bookmanagementapp/base.html' %}
+
+{% load static %}
+
+{% block header %}
+  <div class="pricing-header p-4 pb-md-5 mx-auto text-center">
+    <h1 class="display-4 fw-bold text-primary">Return - 書籍の返却</h1>
+    <p class="fs-5 text-muted mt-3">
+      ここでは研究室内で管理している書籍の返却手続きを行えます。<br>
+      返却したい書籍を選択し返却を行ってください。
+    </p>
+  </div>
+{% endblock header %}
+
+
+{% block content %}
+    <!-- メッセージ -->
+    {% if messages %}
+        <div class="text-center">
+        {% for message in messages %}
+            {% if message.tags == 'info' %}
+                <div class="alert alert-info alert-dismissible fade show " role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% elif message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show " role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% elif message.tags == 'warning' %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- 検索フォーム -->
+    <form class="row g-2 justify-content-center mt-4" method="get">
+      <div class="col-auto">
+        <input type="text" name="q" value="{{ q }}" placeholder="タイトルで検索"
+               class="form-control form-control-lg">
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-primary btn-lg" type="submit">検索</button>
+      </div>
+    </form>
+
+
+  <div class="container py-4">
+    <!-- 貸出フォーム : POST -->
+    <form id="returnForm" method="post">{% csrf_token %}
+      <table class="table table-hover align-middle">
+        <!-- 表のヘッダー -->
+        <thead class="table-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">タイトル</th>
+            <th scope="col">著者</th>
+            <th scope="col">貸出日</th>
+            <th scope="col">ISBN</th>
+          </tr>
+        </thead>
+        <!-- 表の中身 -->
+        <tbody>
+          {% for loan_obj in can_return_books_page %}
+            <tr>
+              <td>
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="selected_isbns"
+                       value="{{ loan_obj.book.isbn }}">
+              </td>
+              <td>{{ loan_obj.book.title }}</td>
+              <td>{{ loan_obj.book.author }}</td>
+              <td>{{ loan_obj.borrowed_date | date:"o/n/j" }}</td>
+              <td>{{ loan_obj.book.isbn }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-5">借りている本はありません</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- ページネーション -->
+      <nav aria-label="ページナビ" class="d-flex justify-content-center">
+        <ul class="pagination">
+
+            {% if books_page.has_previous %}
+            <li class="page-item">
+                <a class="page-link"
+                href="?page={{ can_return_books_page.previous_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+                前へ
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">前へ</span></li>
+            {% endif %}
+
+            <!-- 簡易: 現在ページと総ページ表示 -->
+            <li class="page-item disabled">
+            <span class="page-link">
+                {{ can_return_books_page.number }} / {{ can_return_books_page.paginator.num_pages }}
+            </span>
+            </li>
+
+            {% if can_return_books_page.has_next %}
+            <li class="page-item">
+                <a class="page-link"
+                href="?page={{ can_return_books_page.next_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+                次へ
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">次へ</span></li>
+            {% endif %}
+
+        </ul>
+      </nav>
+
+      <!-- 借りるボタン -->
+      <div class="text-end">
+        <button class="btn btn-success btn-lg" type="submit">
+          返却
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
+
+{% block customscript %}
+  <script src="{% static 'bookmanagement/js/return.js' %}"></script>
+{% endblock customscript %}

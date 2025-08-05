@@ -1,0 +1,71 @@
+{% extends "bookcatalogapp/base.html" %}
+
+{% block title %}書籍一覧{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">📚 書籍一覧</h1>
+
+  <!-- 検索フォーム -->
+  <form class="row g-2 justify-content-center mt-4" method="get">
+    <div class="col-auto">
+      <input type="text" name="q" value="{{ q }}" placeholder="タイトルで検索"
+              class="form-control form-control-lg">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary btn-lg" type="submit">検索</button>
+    </div>
+  </form>
+
+  <div class="container py-4">
+    {% if books_page %}
+      <ul class="list-group">
+        {% for book in books_page %}
+          <li class="list-group-item">
+            <div class="fw-semibold">{{ book.title }}</div>
+            <div class="text-muted small">
+              著者: {{ book.author }} / ISBN: {{ book.isbn }}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="alert alert-info">まだ書籍が登録されていません。</div>
+    {% endif %}
+  </div>
+
+  <!-- 下部のページ遷移の定義 -->
+  <nav aria-label="ページナビ" class="d-flex justify-content-center">
+    <ul class="pagination">
+
+        {% if books_page.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ books_page.previous_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+            前へ
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">前へ</span></li>
+        {% endif %}
+
+        <!-- 簡易: 現在ページと総ページ表示 -->
+        <li class="page-item disabled">
+        <span class="page-link">
+            {{ books_page.number }} / {{ books_page.paginator.num_pages }}
+        </span>
+        </li>
+
+        {% if books_page.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+            href="?page={{ books_page.next_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+            次へ
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">次へ</span></li>
+        {% endif %}
+
+    </ul>
+  </nav>
+{% endblock %}

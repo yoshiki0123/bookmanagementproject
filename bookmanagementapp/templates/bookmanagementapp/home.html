@@ -1,0 +1,101 @@
+{% extends 'bookmanagementapp/base.html' %}
+
+{% load static %}
+
+{% block header %}
+  <div class="pricing-header p-4 pb-md-5 mx-auto text-center">
+    <h1 class="display-4 fw-bold text-primary">Home - 書籍の貸出履歴</h1>
+    <p class="fs-5 text-muted mt-3">
+      ここでは研究室内であなたが借りてきた書籍の<br>
+      一覧を見ることができます。
+    </p>
+  </div>
+{% endblock header %}
+
+{% block content %}
+
+
+  <!-- 検索フォーム -->
+  <form class="row g-2 justify-content-center mt-4" method="get">
+    <div class="col-auto">
+      <input type="text" name="q" value="{{ q }}" placeholder="タイトルで検索"
+              class="form-control form-control-lg">
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary btn-lg" type="submit">検索</button>
+    </div>
+  </form>
+
+  <div class="container py-4">
+    <table class="table table-hover align-middle">
+      <!-- 表のヘッダー -->
+      <thead class="table-light">
+        <tr>
+          <th scope="col">タイトル</th>
+          <th scope="col">著者</th>
+          <th scope="col">ISBN</th>
+          <th scope="col">貸出日</th>
+          <th scope="col">返却日</th>
+        </tr>
+      </thead>
+      <!-- 表の中身 -->
+      <tbody>
+        {% for loan_obj in loan_records_page %}
+          <tr>
+            <td>{{ loan_obj.book.title }}</td>
+            <td>{{ loan_obj.book.author }}</td>
+            <td>{{ loan_obj.book.isbn }}</td>
+            <td>{{ loan_obj.borrowed_date | date:"o/n/j" }}</td>
+            <td>
+              {% if loan_obj.returned_date %}
+                {{ loan_obj.returned_date|date:"Y/n/j" }}
+              {% else %}
+                未返却
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="text-center py-5">借りた本はありません</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- ページネーション -->
+    <nav aria-label="ページナビ" class="d-flex justify-content-center">
+      <ul class="pagination">
+
+          {% if loan_records_page.has_previous %}
+          <li class="page-item">
+              <a class="page-link"
+              href="?page={{ loan_records_page.previous_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+              前へ
+              </a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><span class="page-link">前へ</span></li>
+          {% endif %}
+
+          <!-- 簡易: 現在ページと総ページ表示 -->
+          <li class="page-item disabled">
+          <span class="page-link">
+              {{ loan_records_page.number }} / {{ loan_records_page.paginator.num_pages }}
+          </span>
+          </li>
+
+          {% if loan_records_page.has_next %}
+          <li class="page-item">
+              <a class="page-link"
+              href="?page={{ loan_records_page.next_page_number }}{% if q %}&q={{ q|urlencode }}{% endif %}">
+              次へ
+              </a>
+          </li>
+          {% else %}
+          <li class="page-item disabled"><span class="page-link">次へ</span></li>
+          {% endif %}
+
+      </ul>
+    </nav>
+  </div>
+{% endblock content %}

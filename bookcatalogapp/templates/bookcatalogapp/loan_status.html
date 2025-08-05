@@ -1,0 +1,27 @@
+{% extends "bookcatalogapp/base.html" %}
+{% block title %}貸出状況一覧{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">📖 貸出状況</h1>
+
+  {% if loans %}
+    <ul class="list-group">
+      {% for loan in loans %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ loan.book.title }}</strong>
+            <div class="text-muted small">
+              ISBN: {{ loan.book.isbn }}<br>
+              借りた人: {{ loan.user.username }}
+            </div>
+          </div>
+          <span class="badge bg-secondary text-light">
+            {{ loan.borrowed_date|date:"Y/m/d" }} 借出
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-info">現在、貸出中の書籍はありません。</div>
+  {% endif %}
+{% endblock %}

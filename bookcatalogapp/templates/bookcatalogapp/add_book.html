@@ -1,0 +1,63 @@
+{% extends "bookcatalogapp/base.html" %}
+{% load static %}
+
+{% block title %}書籍登録{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">📝 書籍登録（ISBNで取得）</h1>
+
+    {% if messages %}
+        <div class="text-center">
+        {% for message in messages %}
+            {% if message.tags == 'info' %}
+                <div class="alert alert-info alert-dismissible fade show " role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% elif message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show " role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% elif message.tags == 'warning' %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">                
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+
+  <form id="isbn-form" class="mb-3">
+    <div class="input-group">
+      <input type="search" id="isbn-input" class="form-control" placeholder="ISBNをバーコードリーダーで入力" required>
+      <button class="btn btn-outline-secondary" type="submit">検索</button>
+    </div>
+  </form>
+
+<form method="POST" id="register-form" class="{% if not title %}d-none{% endif %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="title" class="form-label">書籍名</label>
+    <input type="text" class="form-control" id="title" name="title"
+           value="{{ title|default:'' }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="author" class="form-label">著者</label>
+    <input type="text" class="form-control" id="author" name="author"
+           value="{{ author|default:'' }}" required>
+  </div>
+  <input type="hidden" id="isbn" name="isbn" value="{{ isbn|default:'' }}">
+  <button type="submit" class="btn btn-primary">登録する</button>
+</form>
+
+
+  <div id="error-message" class="alert alert-danger d-none"></div>
+{% endblock %}
+
+{% block customscript %}
+<script src="{% static 'bookcatalog/js/add_book.js' %}"></script>
+{% endblock customscript %}
+
+
