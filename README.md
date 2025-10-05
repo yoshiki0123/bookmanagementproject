@@ -31,7 +31,7 @@
     python -m venv bookmanagement-env
     ```
 
-4. 仮想環境をアクティブ化します:
+4. 仮想環境をアクティブ化します:  
     **Windows の場合**
     ```bash
     bookmanagement-env\Scripts\activate
