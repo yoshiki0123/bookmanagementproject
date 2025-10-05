@@ -73,16 +73,25 @@
           {% with url_name=request.resolver_match.url_name %}
           <ul class="navbar-nav ms-lg-4">
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'bookmanagement:home' %}">Home</a>
+              <a class="nav-link {% if url_name == 'home' %}active{% endif %}" href="{% url 'bookmanagement:home' %}">🏠 ホーム</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'borrow' %}active{% endif %}" href="{% url 'bookmanagement:borrow' %}">Borrow</a>
+              <a class="nav-link {% if url_name == 'borrow' %}active{% endif %}" href="{% url 'bookmanagement:borrow' %}">📤 書籍貸出</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'return' %}active{% endif %}" href="{% url 'bookmanagement:return' %}">Return</a>
+              <a class="nav-link {% if url_name == 'return' %}active{% endif %}" href="{% url 'bookmanagement:return' %}">🔄 書籍返却</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {% if url_name == 'logout' %}active{% endif %}" href="{% url 'bookmanagement:logout' %}">Logout</a>
+              <a class="nav-link {% if url_name == 'book_list' %}active{% endif %}" href="{% url 'bookmanagement:book_list' %}">📚 書籍一覧</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if url_name == 'add_book' %}active{% endif %}" href="{% url 'bookmanagement:add_book' %}">📝 書籍登録</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if url_name == 'loan_status' %}active{% endif %}" href="{% url 'bookmanagement:loan_status' %}">📖 貸出状況</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if url_name == 'logout' %}active{% endif %}" href="{% url 'bookmanagement:logout' %}">🚪 ログアウト</a>
             </li>
           </ul>
           {% endwith %}

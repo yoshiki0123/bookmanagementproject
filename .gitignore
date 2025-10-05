@@ -19,6 +19,7 @@ db.sqlite3
 .vscode/
 .idea/
 
+
 # その他
 bookmanagementapp/migrations/0001_initial.py
 bookmanagementapp/migrations/0002_alter_loanmodel_book_and_more.py

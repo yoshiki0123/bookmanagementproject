@@ -1,10 +1,19 @@
-{% extends "bookcatalogapp/base.html" %}
+{% extends "bookmanagementapp/base.html" %}
 {% load static %}
 
 {% block title %}書籍登録{% endblock %}
 
+{% block header %}
+  <div class="pricing-header p-4 pb-md-5 mx-auto text-center">
+    <h1 class="display-4 fw-bold text-primary">📝 書籍登録</h1>
+    <p class="fs-5 text-muted mt-3">
+      ここでは研究室内にある書籍の登録手続きを行えます。<br>
+      登録したい書籍のISBNをバーコードリーダーで読み取り書籍の登録を行ってください。
+    </p>
+  </div>
+{% endblock header %}
+
 {% block content %}
-  <h1 class="mb-4">📝 書籍登録（ISBNで取得）</h1>
 
     {% if messages %}
         <div class="text-center">
@@ -57,7 +66,7 @@
 {% endblock %}
 
 {% block customscript %}
-<script src="{% static 'bookcatalog/js/add_book.js' %}"></script>
+<script src="{% static 'bookmanagement/js/add_book.js' %}"></script>
 {% endblock customscript %}
 
 

@@ -1,10 +1,18 @@
-{% extends "bookcatalogapp/base.html" %}
+{% extends "bookmanagementapp/base.html" %}
 
 {% block title %}書籍一覧{% endblock %}
 
-{% block content %}
-  <h1 class="mb-4">📚 書籍一覧</h1>
+{% block header %}
+  <div class="pricing-header p-4 pb-md-5 mx-auto text-center">
+    <h1 class="display-4 fw-bold text-primary">📚 書籍一覧</h1>
+    <p class="fs-5 text-muted mt-3">
+      ここでは研究室内にある書籍の一覧を表示できます。<br>
+      借りたい書籍や気になる書籍の検索を行ってください。
+    </p>
+  </div>
+{% endblock header %}
 
+{% block content %}
   <!-- 検索フォーム -->
   <form class="row g-2 justify-content-center mt-4" method="get">
     <div class="col-auto">
