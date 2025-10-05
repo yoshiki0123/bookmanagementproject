@@ -218,6 +218,7 @@ def return_book(request):
         'q': query,
     })
 
+@login_required
 def book_list(request):
     query = request.GET.get("q", "") # 検索クエリ
     page  = request.GET.get("page", 1) # ページ番号
@@ -241,6 +242,7 @@ def book_list(request):
         'q': query,
     })
 
+@login_required
 def add_book(request):
     if request.method == 'POST':
         title = request.POST.get('title')
@@ -270,6 +272,7 @@ def add_book(request):
 
     return render(request, 'bookmanagementapp/add_book.html')
 
+@login_required
 def loan_status_list(request):
     # 貸出状況の一覧を取得
     loans = LoanModel.objects.filter(returned_date__isnull=True)
