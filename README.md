@@ -18,28 +18,33 @@
 ### インストール手順
 1. このリポジトリをクローンします:
     ```bash
-    git clone https://github.com/yoshiki0123/diary_webapp.git
+    git clone https://github.com/yoshiki0123/bookmanagementproject.git
     ```
 
 2. プロジェクトディレクトリに移動します:
     ```bash
-    cd diary_webapp
+    cd bookmanagementproject
     ```
 
 3. Condaを使用して仮想環境を作成します:
     ```bash
-    conda create --name diary_env python=3.8
+    python -m venv bookmanagement-env
     ```
 
 4. 仮想環境をアクティブ化します:
+    **Windows の場合**
     ```bash
-    conda activate diary_env
+    bookmanagement-env\Scripts\activate
     ```
-5. 必要なパッケージをインストールします:
+    **Linux　の場合**
+    ```bash
+    source bookmanagement-env/bin/activate
+    ```
+6. 必要なパッケージをインストールします:
     ```bash
     pip install -r requirements.txt
     ```
-6. `SECRET_KEY` を生成します:
+7. `SECRET_KEY` を生成します:
 
     Djangoの `get_random_secret_key` を使ってランダムな `SECRET_KEY` を生成します。
 
@@ -57,39 +62,24 @@
        ```
        SECRET_KEY = 'your_secret_key'
        ```
-7.  `settings.py` のデータベース設定を MariaDB に変更します:
-   
-    以下は MariaDB に接続するためのサンプル設定です。これを settings.py の DATABASES セクションに追加してください。
-    ```
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'your_db_name',
-        'USER': 'your_db_user',
-        'PASSWORD': 'your_db_password',
-        'HOST': 'localhost',
-        'PORT': '3306',  
-        }
-    }
-    ```
-9. マイグレーションを適用します:
+8. マイグレーションを適用します:
     ```bash
     python manage.py migrate
     ```
 
-10. 管理者ユーザーを作成します:
+9. 管理者ユーザーを作成します:
     ```bash
     python manage.py createsuperuser
     ```
 
-11. 開発サーバーを起動します:
+10. 開発サーバーを起動します:
     ```bash
     python manage.py runserver
     ```
 
-12. ブラウザで以下のURLにアクセスして動作を確認します:
+11. ブラウザで以下のURLにアクセスして動作を確認します:
     ```
-    http://127.0.0.1:8000/diary/
+    http://127.0.0.1:8000/
     ```
 
 ---
