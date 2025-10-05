@@ -40,11 +40,11 @@
     ```bash
     source bookmanagement-env/bin/activate
     ```
-6. 必要なパッケージをインストールします:
+5. 必要なパッケージをインストールします:
     ```bash
     pip install -r requirements.txt
     ```
-7. `SECRET_KEY` を生成します:
+6. `SECRET_KEY` を生成します:
 
     Djangoの `get_random_secret_key` を使ってランダムな `SECRET_KEY` を生成します。
 
@@ -62,22 +62,22 @@
        ```
        SECRET_KEY = 'your_secret_key'
        ```
-8. マイグレーションを適用します:
+7. マイグレーションを適用します:
     ```bash
     python manage.py migrate
     ```
 
-9. 管理者ユーザーを作成します:
+8. 管理者ユーザーを作成します:
     ```bash
     python manage.py createsuperuser
     ```
 
-10. 開発サーバーを起動します:
+9. 開発サーバーを起動します:
     ```bash
     python manage.py runserver
     ```
 
-11. ブラウザで以下のURLにアクセスして動作を確認します:
+10. ブラウザで以下のURLにアクセスして動作を確認します:
     ```
     http://127.0.0.1:8000/
     ```
