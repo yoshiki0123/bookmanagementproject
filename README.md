@@ -62,22 +62,26 @@
        ```
        SECRET_KEY = 'your_secret_key'
        ```
-7. マイグレーションを適用します:
+8. マイグレーションを作成します:
+    ```bash
+    python manage.py makemigrations bookmanagementapp
+    ```
+9. マイグレーションを適用します:
     ```bash
     python manage.py migrate
     ```
 
-8. 管理者ユーザーを作成します:
+10. 管理者ユーザーを作成します:
     ```bash
     python manage.py createsuperuser
     ```
 
-9. 開発サーバーを起動します:
+11. 開発サーバーを起動します:
     ```bash
     python manage.py runserver
     ```
 
-10. ブラウザで以下のURLにアクセスして動作を確認します:
+12. ブラウザで以下のURLにアクセスして動作を確認します:
     ```
     http://127.0.0.1:8000/
     ```
